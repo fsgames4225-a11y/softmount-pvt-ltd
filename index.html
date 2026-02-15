@@ -47,8 +47,7 @@
 
         /* --- HEADER --- */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
             position: fixed;
             width: 100%;
             top: 0;
@@ -64,42 +63,32 @@
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
+            z-index: 1001;
         }
 
         .logo i { color: var(--accent); }
 
+        /* Desktop Nav */
         .nav-links {
             display: flex;
             gap: 35px;
+            align-items: center;
         }
 
-        .nav-links a {
+        .nav-links li a {
             font-weight: 500;
             color: var(--text-dark);
             position: relative;
         }
 
-        .nav-links a:hover { color: var(--primary); }
+        .nav-links li a:hover { color: var(--primary); }
         
-        /* Underline animation for nav */
-        .nav-links a::after {
-            content: '';
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            transition: 0.3s;
-        }
-        .nav-links a:hover::after { width: 100%; }
-
         .btn-quote {
             padding: 12px 25px;
             background: var(--gradient);
@@ -117,10 +106,19 @@
             color: white;
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         /* --- HERO SECTION --- */
         .hero {
             position: relative;
-            height: 100vh;
+            min-height: 100vh; /* Changed to min-height for mobile content */
             display: flex;
             align-items: center;
             background: url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
@@ -128,9 +126,9 @@
             background-position: center;
             color: white;
             text-align: center;
+            padding-top: 80px; /* Space for fixed header */
         }
 
-        /* Blue Overlay */
         .hero::before {
             content: '';
             position: absolute;
@@ -143,6 +141,7 @@
             z-index: 2;
             max-width: 800px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .hero h1 {
@@ -150,7 +149,6 @@
             font-weight: 700;
             margin-bottom: 20px;
             line-height: 1.2;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
             animation: fadeInDown 1s ease;
         }
 
@@ -165,6 +163,10 @@
         .hero-btns {
             animation: fadeInUp 1s ease 0.5s forwards;
             opacity: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .btn-main {
@@ -173,212 +175,98 @@
             color: var(--primary);
             font-weight: 700;
             border-radius: 50px;
-            display: inline-block;
-            margin: 0 10px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.2);
         }
-        .btn-main:hover {
-            transform: translateY(-3px);
-            background: #f8f9fa;
-        }
 
-        /* --- SECTION TITLES --- */
+        /* --- SECTIONS GENERAL --- */
+        section { padding: 80px 0; }
+        
         .section-title {
             text-align: center;
-            margin-bottom: 60px;
-        }
-        .section-title span {
-            color: var(--primary);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 0.9rem;
-            display: block;
-            margin-bottom: 10px;
+            margin-bottom: 50px;
         }
         .section-title h2 {
             font-size: 2.5rem;
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-        }
-        .section-title h2::after {
-            content: '';
-            width: 50px;
-            height: 4px;
-            background: var(--gradient);
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
+            color: var(--text-dark);
+            margin-top: 10px;
         }
 
-        section { padding: 100px 0; }
-
-        /* --- ABOUT & STATS --- */
-        .about-wrap {
+        /* --- GRIDS (Services/Projects) --- */
+        .services-grid, .project-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-        .about-img {
-            position: relative;
-        }
-        .about-img img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-        }
-        .experience-badge {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            background: var(--gradient);
-            color: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .experience-badge h3 { font-size: 2.5rem; line-height: 1; }
-
-        /* --- SERVICES --- */
-        .bg-light { background-color: var(--bg-light); }
-        
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
 
+        /* Service Cards */
         .service-card {
             background: white;
             padding: 40px 30px;
             border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: 0.4s;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+        .service-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .icon-box {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        /* Project Items */
+        .project-item {
             position: relative;
+            height: 250px;
+            border-radius: 15px;
             overflow: hidden;
         }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
-            border-color: var(--accent);
-        }
-
-        .icon-box {
-            width: 70px;
-            height: 70px;
-            background: var(--bg-light);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-            color: var(--primary);
-            transition: 0.4s;
-        }
-
-        .service-card:hover .icon-box {
-            background: var(--gradient);
+        .project-item img { width: 100%; height: 100%; object-fit: cover; }
+        .project-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
             color: white;
         }
 
-        .service-card h3 { margin-bottom: 15px; font-size: 1.4rem; }
-        .service-card p { color: var(--text-light); font-size: 0.95rem; }
-
-        /* --- PROJECTS --- */
-        .project-grid {
+        /* --- ABOUT SECTION --- */
+        .about-wrap {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
         }
-        .project-item {
-            position: relative;
-            height: 280px;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .project-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: 0.5s;
-        }
-        .project-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-            display: flex;
-            align-items: flex-end;
-            padding: 30px;
-            opacity: 0;
-            transition: 0.4s;
-        }
-        .project-info h4 { color: white; font-size: 1.4rem; transform: translateY(20px); transition: 0.4s; }
-        
-        .project-item:hover img { transform: scale(1.1); }
-        .project-item:hover .project-overlay { opacity: 1; }
-        .project-item:hover .project-info h4 { transform: translateY(0); }
+        .about-img img { width: 100%; border-radius: 15px; }
 
         /* --- CONTACT SECTION --- */
         .contact-wrapper {
             display: flex;
+            background: white;
             box-shadow: var(--shadow);
             border-radius: 20px;
             overflow: hidden;
-            background: white;
         }
-
         .contact-info-box {
+            width: 40%;
             background: var(--primary);
             color: white;
-            padding: 60px;
-            width: 40%;
-            background-image: linear-gradient(135deg, #0056b3 0%, #003d80 100%);
+            padding: 50px;
         }
-
         .contact-form-box {
             width: 60%;
-            padding: 60px;
+            padding: 50px;
         }
-
-        .info-row {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 30px;
-        }
-
-        .info-row i {
-            font-size: 1.5rem;
-            margin-right: 20px;
-            color: var(--accent);
-            margin-top: 5px;
-        }
-
-        .info-row h4 { font-size: 1.2rem; margin-bottom: 5px; }
-        .info-row p { opacity: 0.8; font-size: 0.95rem; }
-        .info-row a { color: white; text-decoration: underline; opacity: 0.8; }
-
+        .info-row { display: flex; gap: 15px; margin-bottom: 25px; }
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
+            padding: 12px;
+            margin-bottom: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-family: inherit;
-            transition: 0.3s;
         }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
         .btn-submit {
             width: 100%;
             padding: 15px;
@@ -387,105 +275,97 @@
             border: none;
             border-radius: 8px;
             font-weight: 600;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
         }
-        .btn-submit:hover { background: var(--primary-dark); }
 
         /* --- FOOTER --- */
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 70px 0 30px;
-        }
-        
+        footer { background: #0f172a; color: #94a3b8; padding: 60px 0 20px; }
         .footer-grid {
             display: grid;
             grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
-            gap: 40px;
-            margin-bottom: 50px;
+            gap: 30px;
+            margin-bottom: 40px;
         }
+        .copyright { text-align: center; border-top: 1px solid #1e293b; padding-top: 20px; }
 
-        .footer-logo {
-            color: white;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            display: block;
-        }
-        
-        .footer-col h4 {
-            color: white;
-            margin-bottom: 25px;
-            font-size: 1.2rem;
-        }
-
-        .footer-links li { margin-bottom: 12px; }
-        .footer-links a:hover { color: var(--accent); padding-left: 5px; }
-
-        .social-icons a {
-            display: inline-flex;
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .social-icons a:hover { background: var(--accent); }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
-        }
-
-        /* --- MOBILE RESPONSIVE --- */
+        /* --- RESPONSIVE CSS (MOBILE) --- */
         @media (max-width: 992px) {
-            .about-wrap, .contact-wrapper, .footer-grid {
-                grid-template-columns: 1fr;
-            }
-            .contact-info-box, .contact-form-box { width: 100%; }
             .hero h1 { font-size: 2.5rem; }
-            
+            .about-wrap { grid-template-columns: 1fr; text-align: center; }
+            .about-text .section-title { text-align: center; }
+            .contact-wrapper { flex-direction: column; }
+            .contact-info-box, .contact-form-box { width: 100%; padding: 30px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            /* Mobile Nav Logic */
+            .menu-toggle { display: block; }
+
             .nav-links {
-                display: none; 
+                position: fixed;
+                top: 0;
+                right: -100%; /* Hidden by default */
+                width: 75%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: 0.4s ease;
+                z-index: 1000;
             }
+
+            .nav-links.active { right: 0; }
+
+            .nav-links li { margin: 15px 0; }
+            .nav-links li a { font-size: 1.2rem; }
+
+            /* Adjust Hero */
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            
+            /* Section Padding */
+            section { padding: 60px 0; }
+            
+            /* Footer single column */
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
         }
 
         /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <!-- Header Section (With Phone Link) -->
+    <!-- Header -->
     <header>
         <div class="container">
             <nav>
-                <a href="#" class="logo"><i class="fas fa-layer-group"></i> SOFTMOUNT</a>
+                <a href="#" class="logo">
+                    <i class="fas fa-layer-group"></i> SOFTMOUNT
+                </a>
+
+                <!-- Hamburger Icon -->
+                <div class="menu-toggle" id="mobile-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <!-- Nav Links -->
                 <ul class="nav-links">
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#portfolio">Projects</a></li>
                     <li><a href="#contact">Contact</a></li>
+                    
+                    <!-- Phone Button in Mobile Menu as well -->
+                    <li>
+                        <a href="tel:+923077698388" class="btn-quote">
+                            <i class="fas fa-phone-alt" style="margin-right: 8px;"></i> Get Quote
+                        </a>
+                    </li>
                 </ul>
-                <!-- Direct Phone Call Link -->
-                <a href="tel:+923077698388" class="btn-quote">
-                    <i class="fas fa-phone-alt" style="margin-right: 8px;"></i> Get Quote
-                </a>
             </nav>
         </div>
     </header>
@@ -503,49 +383,32 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="bg-light">
+    <section id="services" style="background-color: var(--bg-light);">
         <div class="container">
             <div class="section-title">
                 <span>What We Do</span>
                 <h2>Our Premium Services</h2>
             </div>
-            
             <div class="services-grid">
-                <!-- Service 1 -->
                 <div class="service-card">
                     <div class="icon-box"><i class="fas fa-code"></i></div>
                     <h3>Web Development</h3>
-                    <p>Responsive, fast, and SEO-friendly websites tailored to your brand using modern technologies.</p>
+                    <p>Responsive, fast, and SEO-friendly websites tailored to your brand.</p>
                 </div>
-                <!-- Service 2 -->
                 <div class="service-card">
                     <div class="icon-box"><i class="fas fa-mobile-screen-button"></i></div>
                     <h3>App Development</h3>
-                    <p>Native and Hybrid mobile applications (iOS & Android) that offer seamless user experiences.</p>
+                    <p>Native and Hybrid mobile applications for iOS & Android.</p>
                 </div>
-                <!-- Service 3 -->
                 <div class="service-card">
                     <div class="icon-box"><i class="fas fa-bullhorn"></i></div>
                     <h3>Digital Marketing</h3>
-                    <p>Boost your presence with data-driven SEO, Social Media Marketing, and PPC campaigns.</p>
+                    <p>Boost your presence with SEO, Social Media, and PPC campaigns.</p>
                 </div>
-                <!-- Service 4 -->
                 <div class="service-card">
                     <div class="icon-box"><i class="fas fa-swatchbook"></i></div>
                     <h3>UI/UX Design</h3>
-                    <p>Creating intuitive and visually stunning interfaces that users love to interact with.</p>
-                </div>
-                <!-- Service 5 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <h3>Cloud Solutions</h3>
-                    <p>Secure cloud hosting, migration, and management services for enterprise scalability.</p>
-                </div>
-                <!-- Service 6 -->
-                <div class="service-card">
-                    <div class="icon-box"><i class="fas fa-shield-alt"></i></div>
-                    <h3>Cyber Security</h3>
-                    <p>Protecting your digital assets with advanced security protocols and monitoring.</p>
+                    <p>Intuitive and visually stunning interfaces for better user experience.</p>
                 </div>
             </div>
         </div>
@@ -557,34 +420,22 @@
             <div class="about-wrap">
                 <div class="about-img">
                     <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Team">
-                    <div class="experience-badge">
-                        <h3>10+</h3>
-                        <p>Years Experience</p>
-                    </div>
                 </div>
                 <div class="about-text">
                     <div class="section-title" style="text-align: left;">
                         <span>About Us</span>
                         <h2>Innovating for the Future</h2>
                     </div>
-                    <p style="margin-bottom: 20px; font-size: 1.1rem; color: #555;">
-                        SOFTMOUNT PVT. LTD is a leading technology agency based in Islamabad. We specialize in delivering high-quality software solutions that drive business growth.
-                    </p>
-                    <p style="color: #777; margin-bottom: 30px;">
-                        Our team of expert developers and designers work passionately to create products that stand out. From startups to enterprises, we have helped hundreds of clients achieve their digital goals.
-                    </p>
-                    <ul style="margin-bottom: 30px;">
-                        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 10px;"></i> 24/7 Technical Support</li>
-                        <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 10px;"></i> Agile Development Process</li>
-                        <li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 10px;"></i> 100% Client Satisfaction</li>
-                    </ul>
+                    <p>SOFTMOUNT PVT. LTD is a leading technology agency based in Islamabad. We specialize in delivering high-quality software solutions that drive business growth.</p>
+                    <br>
+                    <p>We believe in quality, transparency, and timely delivery. From startups to enterprises, we have helped hundreds of clients achieve their digital goals.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio/Projects -->
-    <section id="portfolio" class="bg-light">
+    <!-- Projects -->
+    <section id="portfolio" style="background-color: var(--bg-light);">
         <div class="container">
             <div class="section-title">
                 <span>Portfolio</span>
@@ -592,28 +443,16 @@
             </div>
             <div class="project-grid">
                 <div class="project-item">
-                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Project">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>E-Commerce Platform</h4>
-                        </div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Work 1">
+                    <div class="project-overlay"><h4>E-Commerce Platform</h4></div>
                 </div>
                 <div class="project-item">
-                    <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Project">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>Finance App Dashboard</h4>
-                        </div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1555774698-0b77e0d5fac6?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Work 2">
+                    <div class="project-overlay"><h4>Finance Dashboard</h4></div>
                 </div>
                 <div class="project-item">
-                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Project">
-                    <div class="project-overlay">
-                        <div class="project-info">
-                            <h4>Corporate Analytics</h4>
-                        </div>
-                    </div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Work 3">
+                    <div class="project-overlay"><h4>Corporate Analytics</h4></div>
                 </div>
             </div>
         </div>
@@ -628,56 +467,27 @@
             </div>
             
             <div class="contact-wrapper">
-                <!-- Info Box -->
                 <div class="contact-info-box">
-                    <h3 style="margin-bottom: 30px; font-size: 1.8rem;">Let's discuss your project</h3>
-                    
+                    <h3 style="margin-bottom: 30px;">Let's discuss your project</h3>
                     <div class="info-row">
                         <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Address</h4>
-                            <p>House 76-B, Street 61,<br>F-8-4, Islamabad</p>
-                        </div>
+                        <p>House 76-B, Street 61,<br>F-8-4, Islamabad</p>
                     </div>
-                    
                     <div class="info-row">
                         <i class="fas fa-phone-alt"></i>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+92307 7698388</p>
-                        </div>
+                        <p>+92307 7698388</p>
                     </div>
-                    
                     <div class="info-row">
                         <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p><a href="mailto:wsitehmter@gmail.com">wsitehmter@gmail.com</a></p>
-                        </div>
-                    </div>
-
-                    <div class="social-icons" style="margin-top: 40px;">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <p><a href="mailto:wsitehmter@gmail.com" style="color:white; text-decoration: underline;">wsitehmter@gmail.com</a></p>
                     </div>
                 </div>
                 
-                <!-- Form Box -->
                 <div class="contact-form-box">
                     <form>
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" placeholder="John Doe">
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" placeholder="email@example.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Message</label>
-                            <textarea rows="4" placeholder="Tell us about your project..."></textarea>
-                        </div>
+                        <div class="form-group"><input type="text" placeholder="Full Name"></div>
+                        <div class="form-group"><input type="email" placeholder="Email Address"></div>
+                        <div class="form-group"><textarea rows="4" placeholder="Message"></textarea></div>
                         <button type="submit" class="btn-submit">Send Message</button>
                     </form>
                 </div>
@@ -689,33 +499,29 @@
     <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="#" class="footer-logo">SOFTMOUNT</a>
-                    <p>Innovative software solutions for modern businesses. We help you scale, grow, and succeed in the digital world.</p>
+                <div>
+                    <h3 style="color:white; margin-bottom:15px;">SOFTMOUNT</h3>
+                    <p>Innovative software solutions for modern businesses.</p>
                 </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#services">Our Services</a></li>
-                        <li><a href="#portfolio">Projects</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                <div>
+                    <h4 style="color:white; margin-bottom:15px;">Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Mobile Apps</a></li>
-                        <li><a href="#">SEO Marketing</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
+                <div>
+                    <h4 style="color:white; margin-bottom:15px;">Services</h4>
+                    <ul>
+                        <li>Web Development</li>
+                        <li>App Development</li>
                     </ul>
                 </div>
-                <div class="footer-col">
-                    <h4>Locate Us</h4>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-map-marker-alt" style="margin-right:10px; color:var(--accent)"></i> Islamabad, F-8-4</li>
-                        <li><i class="fas fa-phone" style="margin-right:10px; color:var(--accent)"></i> +92307 7698388</li>
+                <div>
+                    <h4 style="color:white; margin-bottom:15px;">Contact</h4>
+                    <ul>
+                        <li>Islamabad, F-8-4</li>
+                        <li>+92307 7698388</li>
                     </ul>
                 </div>
             </div>
@@ -725,5 +531,34 @@
         </div>
     </footer>
 
+    <!-- JavaScript for Mobile Menu -->
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Toggle Menu
+        mobileMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            
+            // Toggle Icon (Hamburger <-> Close)
+            const icon = mobileMenu.querySelector('i');
+            if(navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenu.querySelector('i').classList.remove('fa-times');
+                mobileMenu.querySelector('i').classList.add('fa-bars');
+            });
+        });
+    </script>
 </body>
 </html>
